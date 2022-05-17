@@ -1,11 +1,11 @@
 org: kusa1224
 app: little-t
-service: twitter-callback-handler
+service: twitter-service
 frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: python3.8
+  runtime: python3.9.7
 
 functions:
   hello:
