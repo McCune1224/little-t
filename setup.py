@@ -1,3 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
-setup(name='little_t', version='1.0', packages=find_packages())
+if __name__ == '__main__':
+    setup()

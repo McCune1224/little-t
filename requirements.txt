@@ -1,15 +1,31 @@
+aiohttp==3.8.1
+aiosignal==1.2.0
+async-timeout==4.0.2
+attrs==21.4.0
 certifi==2021.10.8
 charset-normalizer==2.0.12
 dnspython==2.2.1
+emoji==1.7.0
+frozenlist==1.3.0
 idna==3.3
--e git+git@github.com:McCune1224/little-t.git@36688a9931b30ca76da69438789e5de94dd3d196#egg=little_t
+iniconfig==1.1.1
 markovify==0.9.4
 mongoengine==0.24.1
+multidict==6.0.2
 oauthlib==3.2.0
+packaging==21.3
+pluggy==1.0.0
+py==1.11.0
 pymongo==4.1.1
+pyparsing==3.0.9
+pytest==7.1.2
 python-dotenv==0.20.0
 requests==2.27.1
 requests-oauthlib==1.3.1
+tomli==2.0.1
 tweepy==4.9.0
 Unidecode==1.3.4
+# Editable Git install with no remote (UNKNOWN==0.0.0)
+-e /home/mccune/Projects/little_t_v2/src
 urllib3==1.26.9
+yarl==1.7.2
