@@ -7,7 +7,7 @@ import tweepy.errors
 class TwitterAPIConnector():
     def __init__(self) -> None:
         self.client = tweepy.Client(
-            bearer_token=TwitterKeys.get_BEARER_TOKEN())
+            bearer_token=TwitterKeys.get_BEARER_TOKEN(), wait_on_rate_limit=True)
 
     def get_user(self, *, id=None, username=None):
         if id is not None:

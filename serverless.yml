@@ -14,3 +14,10 @@ functions:
       - httpApi:
           path: /
           method: get
+  
+    twitter_callback:
+      handler: handler.twitter_callback
+      events:
+        - http:
+            path: /callback
+            method: get

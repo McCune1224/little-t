@@ -9,6 +9,7 @@ class MongoConnector():
         self.db = self.client['tweetDB']
         self.user_collection = self.db['UserAccounts']
         self.tweet_collection = self.db['TweetDumps']
+        self.tokens = self.db['Tokens']
 
 
 if __name__ == '__main__':
