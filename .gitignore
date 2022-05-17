@@ -129,5 +129,9 @@ dmypy.json
 .pyre/
 
 
-# config stuff
+# python package config
 .toml
+
+
+#serverless
+.serverless

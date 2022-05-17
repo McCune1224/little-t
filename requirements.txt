@@ -25,7 +25,5 @@ requests-oauthlib==1.3.1
 tomli==2.0.1
 tweepy==4.9.0
 Unidecode==1.3.4
-# Editable Git install with no remote (UNKNOWN==0.0.0)
--e /home/mccune/Projects/little_t_v2/src
 urllib3==1.26.9
 yarl==1.7.2
