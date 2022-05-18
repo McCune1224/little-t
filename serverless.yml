@@ -1,23 +1,23 @@
 org: kusa1224
-app: little-t
-service: twitter-service
+app: twitter-flask-api
+service: twitter-flask-api
+
 frameworkVersion: '3'
+
+custom:
+  wsgi:
+    app: app.app
 
 provider:
   name: aws
-  runtime: python3.9
+  runtime: python3.8
 
 functions:
-  hello:
-    handler: handler.hello
+  api:
+    handler: wsgi_handler.handler
     events:
-      - httpApi:
-          path: /
-          method: get
-  
-    twitter_callback:
-      handler: handler.twitter_callback
-      events:
-        - http:
-            path: /callback
-            method: get
+      - httpApi: '*'
+
+plugins:
+  - serverless-wsgi
+  - serverless-python-requirements
