@@ -2,6 +2,14 @@ import os
 from dotenv import load_dotenv
 
 
+class AWSKeys():
+    load_dotenv()
+
+    @staticmethod
+    def get_API_URL():
+        return os.environ.get('AWS_LAMBDA_URL')
+
+
 class MongoKeys():
     """
     Static Class to get .env variables for MongoDB Authentication.
@@ -47,6 +55,17 @@ class TwitterKeys():
     def get_ACCESS_TOKEN_SECRET():
         """Returns Twitter Developer ACCESS_TOKEN_SECRET"""
         return os.environ.get('ACCESS_TOKEN_SECRET')
+
+    @staticmethod
+    def get_CLIENT_ID():
+        """Returns Twitter Developer ACCESS_TOKEN_SECRET"""
+        return os.environ.get('CLIENT_ID')
+
+    @staticmethod
+    def get_CLIENT_SECRET():
+        """Returns Twitter Developer ACCESS_TOKEN_SECRET"""
+        return os.environ.get('CLIENT_SECRET')
+
 
 if __name__ == '__main__':
     print(TwitterKeys.get_ACCESS_TOKEN_SECRET())

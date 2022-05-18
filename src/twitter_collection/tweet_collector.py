@@ -1,5 +1,6 @@
+import requests
 from tweepy.cursor import Cursor
-from configs.api_keys import TwitterKeys
+from configs.api_keys import TwitterKeys, AWSKeys
 import tweepy
 import tweepy.errors
 
@@ -53,12 +54,25 @@ class TwitterAPIConnector():
         else:
             return self.client.get_users_tweets(user.data['id'], exclude=["replies", "retweets"])
 
+    def get_oauth_tokens(self):
+        client = TwitterKeys.get_CLIENT_ID()
+        client_secret = TwitterKeys.get_CLIENT_SECRET()
+        redirect_uri = AWSKeys.get_API_URL() + 'callback'
+        scope = ["tweet.read", "tweet.write", "users.read", "offline.access"]
+        user_handler = tweepy.OAuth2UserHandler(client_id=client, scope=scope,
+                                                redirect_uri=redirect_uri,
+                                                client_secret=client_secret
+                                                )
+        auth = user_handler.get_authorization_url()
+        pass
+
 
 if __name__ == '__main__':
     #target = input("Give User: ")
     api = TwitterAPIConnector()
-    target = "@biggayduck"
-    response = api.get_user(username=target)
-    foo = api.get_tweets(id=response.data['id'], repeat=True)
-    for tweet in foo:
-        print(tweet.id)
+    # target = "@biggayduck"
+    # response = api.get_user(username=target)
+    # foo = api.get_tweets(id=response.data['id'], repeat=True)
+    # for tweet in foo:
+    #     print(tweet.id)
+    print(api.get_oauth_tokens())

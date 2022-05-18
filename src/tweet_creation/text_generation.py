@@ -27,23 +27,25 @@ class MarkovTweetGeneration():
             if re.search(r"http?s://t.co/\w{4,10}", text):
                 text = re.sub(r"http?s://t.co/\w{4,10}", "", text)
                 text = text[:len(text)-1]
-            text = re.sub(r"@", "", text)
             text = emoji.replace_emoji(text, '')
+            text = re.sub(r"@", "", text)
             # add punctuation
             if len(text) == 1 or len(text) == 0:
                 continue
             # occasional sentence will start with a blank
             if text[-1] not in sentence_finishers:
                 text += '.'
+            text = text.capitalize()
             text_blob += text + " "
-        return text_blob.lower()
+        return text_blob
 
     def generate_tweet_text(self):
         text_corpus = self._text_preperation()
         Markov_Model = markovify.Text(
             input_text=text_corpus, well_formed=False)
         try:
-            new_sentence = Markov_Model.make_short_sentence(250)
+            new_sentence = Markov_Model.make_short_sentence(
+                min_chars=100, max_chars=150, tries=100).capitalize()
         # TooSmall
         except KeyError:
             return

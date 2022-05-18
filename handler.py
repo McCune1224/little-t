@@ -1,9 +1,5 @@
 import json
-import tweepy
-from src.configs.api_keys import TwitterKeys as tc
 
-twitter_authenticator = tweepy.AppAuthHandler(
-    tc.get_API_KEY(), tc.get_API_KEY_SECRET())
 
 
 def hello(event, context):
@@ -25,4 +21,3 @@ def twitter_callback(event, context):
     response = {"statusCode": 200, "body": json.dumps(body)}
 
     return response
-

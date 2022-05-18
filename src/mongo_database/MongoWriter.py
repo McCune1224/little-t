@@ -70,7 +70,11 @@ class MongoWriter():
         self.connector.tweet_collection.insert_many(new_mongo_tweet_list)
 
 
+
+
 if __name__ == '__main__':
     writer = MongoWriter()
-    writer.insert_twitter_user(twitter_username="@KusaAlexM")
-    writer.insert_new_tweets(twitter_username="@ElonMusk")
+    # writer.insert_twitter_user(twitter_username="@KusaAlexM")
+    # writer.insert_new_tweets(twitter_username="@ElonMusk")
+
+

@@ -135,3 +135,7 @@ dmypy.json
 
 #serverless
 .serverless
+
+
+#NPM STuff
+node_modules/
