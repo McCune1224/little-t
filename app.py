@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, make_response, request
-from src.mongo_database.MongoWriter import MongoWriter
+from mongo_database.MongoWriter import MongoWriter
 app = Flask(__name__)
 
 

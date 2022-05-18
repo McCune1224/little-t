@@ -4,7 +4,6 @@ import emoji
 from mongo_database.MongoReader import MongoReader
 from mongo_database.MongoWriter import MongoWriter
 from twitter_collection import tweet_collector
-import timeit
 
 
 class MarkovTweetGeneration():
