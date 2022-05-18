@@ -27,8 +27,14 @@ class MongoReader():
         else:
             raise TypeError("Twitter ID Required")
 
+    def get_callback_token(self, state):
+        try:
+            return self.connector.tokens_collection.find_one({'state': state})
+        except ValueError:
+            return
+
 
 if __name__ == '__main__':
     foo = MongoReader()
     me = foo.get_user_by_twitter_id(858911602053074944)
-    print(me)
+    print(foo.get_callback_token(state="8D4WqIyOZPSKAMYplCrbIb8bqufwYx"))

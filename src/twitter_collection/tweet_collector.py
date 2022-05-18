@@ -3,6 +3,7 @@ from tweepy.cursor import Cursor
 from configs.api_keys import TwitterKeys, AWSKeys
 import tweepy
 import tweepy.errors
+import mongo_database.MongoReader
 
 
 class TwitterAPIConnector():
@@ -63,8 +64,10 @@ class TwitterAPIConnector():
                                                 redirect_uri=redirect_uri,
                                                 client_secret=client_secret
                                                 )
-        auth = user_handler.get_authorization_url()
-        pass
+        #auth = user_handler.get_authorization_url()
+        mr = mongo_database.MongoReader.MongoReader()
+        foo = user_handler.authorization_url(url=redirect_uri, state="8D4WqIyOZPSKAMYplCrbIb8bqufwYx")
+        print(foo) 
 
 
 if __name__ == '__main__':
@@ -76,3 +79,4 @@ if __name__ == '__main__':
     # for tweet in foo:
     #     print(tweet.id)
     print(api.get_oauth_tokens())
+

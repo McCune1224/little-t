@@ -9,10 +9,10 @@ class MongoConnector():
         self.db = self.client['tweetDB']
         self.user_collection = self.db['UserAccounts']
         self.tweet_collection = self.db['TweetDumps']
-        self.tokens = self.db['Tokens']
+        self.tokens_collection = self.db['Tokens']
 
 
 if __name__ == '__main__':
     foo = MongoConnector()
-    print(foo.user_collection.find_one({"twitter_id": -1}))
-    #foo.tweet_collection.create_index([("tweet_id", 1)], unique=True)
+    #print(foo.user_collection.find_one({"twitter_id": -1}))
+    #foo.tokens_collection.create_index([("state", 1)], unique=True)
