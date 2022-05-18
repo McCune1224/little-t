@@ -14,7 +14,6 @@ idna==3.3
 iniconfig==1.1.1
 itsdangerous==1.1.0
 Jinja2==2.11.3
--e git+git@github.com:McCune1224/little-t.git@b1c43db55bae4b7818d4c5060a3290c3cd41d48f#egg=little_t_ALEX_MCCUNE
 markovify==0.9.4
 MarkupSafe==2.0.1
 mongoengine==0.24.1
