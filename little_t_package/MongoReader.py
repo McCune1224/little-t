@@ -1,5 +1,5 @@
-from mongo_database.MongoConnector import MongoConnector
-from mongo_database.data import User
+from MongoConnector import MongoConnector
+from data import User
 
 
 class MongoReader():
