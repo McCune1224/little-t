@@ -46,6 +46,15 @@ class MongoWriter(MongoConnector):
             return 0
         return len(tweets)
 
+    def insert_serialized_model(self, user: TwitterUser, s_model: bytes):
+        user.model = s_model
+        # upsert wil enable insert if model doesn't exist
+        self.user_collection.update_one(
+            {"twitter_id": user.twitter_id},
+            {"$set": {"model": user.model}},
+            upsert=True,
+        )
+
 
 if __name__ == "__main__":
     target = input("Give Username: ")

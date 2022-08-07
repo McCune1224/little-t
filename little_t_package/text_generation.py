@@ -2,7 +2,10 @@ from typing import List
 import markovify
 import re
 import emoji
+from requests import request
+from tweepy.api import sys
 from data.Tweet import Tweet
+from data.User import TwitterUser
 from tweet_collector import TwitterAPIConnector
 from mongo_reader import MongoReader
 from mongo_writer import MongoWriter
@@ -11,16 +14,23 @@ from mongo_writer import MongoWriter
 class MarkovTweetGeneration:
     def __init__(self, tweets: List[Tweet], username: str) -> None:
         self.username = username
+
+        # modified in _text_preperation
         self.tweets = tweets
+        self.required_tweet_amount = 50
+        self.average_tweet_length = 0
+
+        # generated in make generate_markov_model
+        self.markov_model = None
+
         self.buildable = False
-        if len(self.tweets) > 50:
+        if len(self.tweets) >= self.required_tweet_amount:
             self.buildable = True
 
     def _text_preperation(self):
         text_blob = ""
         sentence_finishers = [".", "?", "!"]
-        print(f"Building from a list of {len(self.tweets)} tweets...")
-        for tweet in tweets:
+        for tweet in self.tweets:
             # have to wrap as string class because the ClassString from MongoDB throws errors :(
             text = str(tweet.text)
 
@@ -33,7 +43,7 @@ class MarkovTweetGeneration:
             text = emoji.replace_emoji(text, "")
             text = re.sub(r"@", "", text)
 
-            # add punctuation
+            #
             if len(text) == 1 or len(text) == 0:
                 continue
 
@@ -41,17 +51,29 @@ class MarkovTweetGeneration:
             if text[-1] not in sentence_finishers:
                 text += "."
             text = text.capitalize()
+
             text_blob += text + " "
+        if len(text_blob) == 0:
+            raise ValueError("Too many media posts to generate text from")
+        self.average_tweet_length = len(text_blob) // len(self.tweets)
         return text_blob
 
-    def generate_tweet_text(self):
+    def generate_markov_model(self):
         if self.buildable == False:
-            return f"50 Tweets needed for suitable text generation, have {len(self.tweets)} from {self.username}"
+            raise ValueError(
+                f"User does not have enough tweets {self.required_tweet_amount}"
+            )
         text_corpus = self._text_preperation()
-        markov_model = markovify.Text(input_text=text_corpus, well_formed=False)
+        self.markov_model = markovify.Text(input_text=text_corpus, well_formed=False)
+
+    def make_tweet(self):
+        if self.markov_model == None:
+            raise ValueError("No Makrov Model generated from text yet")
         try:
-            new_sentence = markov_model.make_short_sentence(
-                min_chars=70, max_chars=280, tries=100
+            new_sentence = self.markov_model.make_short_sentence(
+                min_chars=self.average_tweet_length - 20,
+                max_chars=self.average_tweet_length + 20,
+                tries=100,
             ).capitalize()
         # TooSmall
         except KeyError:
@@ -62,26 +84,52 @@ class MarkovTweetGeneration:
 
 
 if __name__ == "__main__":
-    tweets = []
-    requested_user = input("Twitter Handle: ")
-    twitter_collector = TwitterAPIConnector()
-    account_details = twitter_collector.get_user(username=requested_user)
-
+    collected_tweets = []
+    inputted_user = input("Twitter Handle (with or without @): ")
+    collector = TwitterAPIConnector()
     reader = MongoReader()
-    # Case where user doesn't exist yet
+    writer = MongoWriter()
+
+    # Check if User Exists
+    twitter_user_details = collector.get_user(username=inputted_user)
     try:
-        tw = reader.get_user_by_twitter_id(account_details.twitter_id)
-
+        mongo_user_details = reader.get_user_by_handle(
+            str(twitter_user_details.username)
+        )
     except ValueError:
-        print("New user! Pulling tweets and account details from Twitter...")
-        writer = MongoWriter()
-        writer.insert_twitter_user(account_details)
-        tweets = twitter_collector.get_tweets(account_details, repeat=True)
-        writer.insert_new_tweets(tweets)
+        print("New User")
+        # If they don't:
+        # 1. Get User Info
+        print("Collecting Twitter Details")
+        # 2. Collect User Tweets
+        print("Collecting User Tweets")
+        collected_tweets = collector.get_tweets(twitter_user_details, repeat=True)
+        print("Total Tweets: ", len(collected_tweets))
+        # 3. Store User in DB
 
-    # We don't have a new user, so just pull tweets from the db
-    if len(tweets) == 0:
-        tweets = reader.get_tweets_by_author_id(account_details.twitter_id)
-    print(f"Building Model for {requested_user}\n")
-    test_model = MarkovTweetGeneration(tweets, account_details.username)
-    print(test_model.generate_tweet_text())
+        print("Storing User")
+        writer.insert_twitter_user(twitter_user_details)
+        # 4. Store Tweets in DB
+        print("Storing Tweets")
+        writer.insert_new_tweets(collected_tweets)
+
+        mongo_user_details = reader.get_user_by_handle(inputted_user)
+
+    finally:
+        print("Pulling Latest Tweets from DB")
+        pulled_tweets = reader.get_tweets_by_twitter_id(mongo_user_details.twitter_id)
+        print("Generating Model")
+        try:
+            model = MarkovTweetGeneration(
+                pulled_tweets, str(mongo_user_details.username)
+            )
+            model.generate_markov_model()
+        except ValueError as ve:
+            print(f"!!!ERROR: {ve}!!!")
+            sys.exit()
+        print(f"average tweet length of: { model.average_tweet_length}")
+        tweet = model.make_tweet()
+        print("=" * len(tweet))
+        print(tweet)
+        print("=" * len(tweet))
+        print(len(tweet))
