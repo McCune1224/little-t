@@ -80,7 +80,7 @@ class MarkovTweetGeneration:
             return
         if new_sentence[0:2] == ". ":
             new_sentence = new_sentence[2:]
-        return f"'{new_sentence}' - {self.username}"
+        return f"\"{new_sentence}\" - {self.username}"
 
 
 if __name__ == "__main__":

@@ -45,13 +45,13 @@ class TwitterKeys():
     def get_ACCESS_TOKEN():
         load_dotenv()
         """Returns Twitter Developer ACCESS_TOKEN"""
-        return os.environ.get('ACCESS_TOKEN')
+        return os.environ.get('LITTLE_T_TOKEN')
 
     @staticmethod
     def get_ACCESS_TOKEN_SECRET():
         load_dotenv()
         """Returns Twitter Developer ACCESS_TOKEN_SECRET"""
-        return os.environ.get('ACCESS_TOKEN_SECRET')
+        return os.environ.get('LITTLE_T_TOKEN_SECRET')
 
     @staticmethod
     def get_CLIENT_ID():
