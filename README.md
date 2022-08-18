@@ -1,8 +1,18 @@
-# Overview
-This Project aims to fetch any given user's spotify playlists and export the details to JSON format, and then utilize Youtube-DL to fetch mp3/mp4 files of the specified songs within their playlists. 
+# Overview 📋
+Little_t is designed to copy a user's writing style by collecting a user's previous tweets and then responding to the requested user a sentence similar to that of the target. This process is explained below. 
 
-# How It Works
-### 1. Call to [Twitter's Web API](https://developer.twitter.com/en/docs/twitter-api) with a given twitter handle (@username) to collect the following peices of information:
+# Interact with Little_t Right now 🔊
+
+### 🐣 Want to see him in action? Try him out right now at https://twitter.com/little_t_bot 🐣
+
+# How It Works ❔
+
+### 1. Webook Subscription to [Twitter's Web API](https://developer.twitter.com/en/docs/twitter-api/enterprise/account-activity-api/quick-start/enterprise-account-activity-api) via AWS Lambda Deploy of a HTTP Flask API. 
+- Setup callback and webhook urls for Twitter to send real time tweet activity 
+- Subscribe to Little_t_bot's account to get real time POST request information from Twitter (Tweets, Direct Messages, Mentions, Likes, etc...)
+- Parse payload information to know when a user requests for little_t to copy someone.
+
+### 2. Call to [Twitter's Web API](https://developer.twitter.com/en/docs/twitter-api) with a given twitter handle (@username) to collect the following peices of information:
   - Twitter ID
   - Current User Name
   - User's Previous [Timeline Tweets](https://developer.twitter.com/en/docs/twitter-api/v1/tweets/timelines/overview) (up to 3200 recent tweets excluding retweets and comments) 
@@ -18,23 +28,3 @@ This Project aims to fetch any given user's spotify playlists and export the det
 - tokenization of text
 
 ### 4. Plug the newly made Text Corpus into a [Markov Chains](https://en.wikipedia.org/wiki/Markov_chain) algorithm to generate a NLP Model for generating new sentences. 
-
-
-
-  
-
-
-# Video Visual of the process:
-![Little_T_Example](https://user-images.githubusercontent.com/19767251/182556066-8c56d41a-0013-42a6-8de4-c0402db992c4.gif)
-
-
-# TODO/Future Goals
-As of right now, I would really like to have this service being utlized as a twitter bot, which an account has already been made for at https://twitter.com/little_t_bot
-
-There would be two things needed for this however:
-1. Some sort of serverless function to handle calling the functions required for the process listed above (AWS Lambda would work)
-- This part I have actually already set up a Lambda Function for and worked great..._the issue is with the other requirment_
-
-2. A webhook integration of Twitter's API so that the bot can trigger said serverless function when someone interacts with the bot in some special way (for example a direct message to the bot along the lines of "Copy @username" or by directly tweeting "@little_t_bot Copy @username")
-
-**The problem with setting up a webhook is that you need access to Twitter's Account Activity API...which is for enterprises only... so for right now this project is on hold, but possibly down the line if this APi is made public or doesn't require enterprise level access to obtain, I can return to this project. For right now we are at a roadblock however.**
