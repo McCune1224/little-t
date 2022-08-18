@@ -4,11 +4,11 @@ import re
 import emoji
 from requests import request
 from tweepy.api import sys
-from data.Tweet import Tweet
-from data.User import TwitterUser
-from tweet_collector import TwitterAPIConnector
-from mongo_reader import MongoReader
-from mongo_writer import MongoWriter
+from little_t.data.Tweet import Tweet
+from little_t.data.User import TwitterUser
+from little_t.tweet_collector import TwitterAPIConnector
+from little_t.mongo_reader import MongoReader
+from little_t.mongo_writer import MongoWriter
 
 
 class MarkovTweetGeneration:

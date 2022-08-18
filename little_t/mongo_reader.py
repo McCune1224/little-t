@@ -1,7 +1,7 @@
 from typing import List
-from mongo_connector import MongoConnector
-from data.Tweet import Tweet
-from data.User import TwitterUser
+from little_t.mongo_connector import MongoConnector
+from little_t.data.Tweet import Tweet
+from little_t.data.User import TwitterUser
 
 
 class MongoReader(MongoConnector):
@@ -41,20 +41,11 @@ class MongoReader(MongoConnector):
         return tweets
 
 
+
 if __name__ == "__main__":
     foo = MongoReader()
-    me = foo.get_user_by_twitter_id("858911602053074944")
+    me = foo.get_user_by_twitter_id(twitter_id=858911602053074944)
     # tweets_int = foo.get_tweets_by_author_id(858911602053074944)
     # tweets_str = foo.get_tweets_by_author_id("858911602053074944")
 
     print(me.to_json())
-    # tally_a = 0
-    # for t in tweets_str.find():
-    #     tally_a += 1
-    #     print(t)
-    # tally_b = 0
-    # for t in tweets_int.find():
-    #     tally_b += 1
-    #     print(t)
-    # print(tally_a)
-    # print(tally_b)

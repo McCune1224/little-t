@@ -42,28 +42,28 @@ class TwitterKeys():
         return os.environ.get('BEARER_TOKEN')
 
     @staticmethod
-    def get_ACCESS_TOKEN():
+    def get_LITTLE_T_ACCESS_TOKEN():
         load_dotenv()
         """Returns Twitter Developer ACCESS_TOKEN"""
         return os.environ.get('LITTLE_T_TOKEN')
 
     @staticmethod
-    def get_ACCESS_TOKEN_SECRET():
+    def get_LITTLE_T_ACCESS_TOKEN_SECRET():
         load_dotenv()
         """Returns Twitter Developer ACCESS_TOKEN_SECRET"""
         return os.environ.get('LITTLE_T_TOKEN_SECRET')
 
     @staticmethod
-    def get_CLIENT_ID():
+    def get_PROJECT_ACCESS_TOKEN():
         load_dotenv()
         """Returns Twitter Developer ACCESS_TOKEN_SECRET"""
-        return os.environ.get('CLIENT_ID')
+        return os.environ.get('PROJECT_ACCESS_TOKEN')
 
     @staticmethod
-    def get_CLIENT_SECRET():
+    def get_PROJECT_ACCESS_TOKEN_SECRET():
         load_dotenv()
         """Returns Twitter Developer ACCESS_TOKEN_SECRET"""
-        return os.environ.get('CLIENT_SECRET')
+        return os.environ.get('PROJECT_ACCESS_TOKEN_SECRET')
 
 
 if __name__ == '__main__':

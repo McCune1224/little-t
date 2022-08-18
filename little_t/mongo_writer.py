@@ -1,8 +1,10 @@
 from typing import List
-from mongo_connector import MongoConnector
-from data.User import TwitterUser
-from data.Tweet import Tweet
-import tweet_collector
+from little_t.mongo_connector import MongoConnector
+import json
+from bson import json_util
+from little_t.data.User import TwitterUser
+from little_t.data.Tweet import Tweet
+import little_t.tweet_collector
 import pymongo.errors
 
 
@@ -55,6 +57,15 @@ class MongoWriter(MongoConnector):
             upsert=True,
         )
 
+    def insert_account_activity(self, json_data):
+        if isinstance(json_data, dict):
+            json_data = json.dumps(json_data)
+        try:
+            bson_data = json_util.loads(json_data)
+            self.account_collection.insert_one(bson_data)
+        except Exception as bare_except:
+            print(bare_except)
+
 
 if __name__ == "__main__":
     target = input("Give Username: ")
@@ -62,15 +73,17 @@ if __name__ == "__main__":
     print("opening connection to db")
     writer = MongoWriter()
 
-    print("API Auth for twitter")
-    collector = tweet_collector.TwitterAPIConnector()
-
-    print("getting twitter user details")
-    user = collector.get_user(username=target)
-    print(user.twitter_id)
-
-    print("getting tweets")
-    tweets = collector.get_tweets(user, repeat=True)
-    writer.insert_twitter_user(user)
-    written = writer.insert_new_tweets(tweets)
-    print(f"Wrote a total of {len(tweets)} entries for {user.username}")
+    writer.insert_account_activity(json.dumps(test))
+    #
+    # print("API Auth for twitter")
+    # collector = tweet_collector.TwitterAPIConnector()
+    #
+    # print("getting twitter user details")
+    # user = collector.get_user(username=target)
+    # print(user.twitter_id)
+    #
+    # print("getting tweets")
+    # tweets = collector.get_tweets(user, repeat=True)
+    # writer.insert_twitter_user(user)
+    # written = writer.insert_new_tweets(tweets)
+    # print(f"Wrote a total of {len(tweets)} entries for {user.username}")

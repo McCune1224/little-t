@@ -2,10 +2,10 @@ from typing import List
 import tweepy
 from tweepy.cursor import Cursor
 import tweepy.errors
-from api_keys import TwitterKeys
+from little_t.api_keys import TwitterKeys
 
-from data.Tweet import Tweet
-from data.User import TwitterUser
+from little_t.data.Tweet import Tweet
+from little_t.data.User import TwitterUser
 
 # import mongo_database.MongoReader
 class TwitterAPIConnector:

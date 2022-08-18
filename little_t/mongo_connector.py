@@ -1,5 +1,5 @@
 import pymongo
-from api_keys import MongoKeys
+from little_t.api_keys import MongoKeys
 
 
 class MongoConnector:
@@ -9,6 +9,7 @@ class MongoConnector:
     CONTAINS:
     user_collection ("UserAccounts")
     tweet_collection ("TweetDumps")
+    account_collection ("AccountActivity")
     """
 
     def __init__(self) -> None:
@@ -18,9 +19,11 @@ class MongoConnector:
         self.db = self.client["tweetDB"]
         self.user_collection = self.db["UserAccounts"]
         self.tweet_collection = self.db["TweetDumps"]
+        self.account_collection = self.db["AccountActivity"]
 
 
 if __name__ == "__main__":
     foo = MongoConnector()
-    foo.tweet_collection.create_index([("tweet_id", 1)], unique=True)
+    print(foo.client.list_database_names())
+    # foo.tweet_collection.create_index([("tweet_id", 1)], unique=True)
     # foo.tokens_collection.create_index([("state", 1)], unique=True)
