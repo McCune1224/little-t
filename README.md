@@ -1,9 +1,10 @@
 # Overview 📋
 Little_t is designed to copy a user's writing style by collecting a user's previous tweets and then responding to the requested user a sentence similar to that of the target. This process is explained below. 
 
-# Interact with Little_t Right now 🔊
+# Deprecated :(
 
-### 🐣 Want to see him in action? Try him out right now at https://twitter.com/little_t_bot 🐣
+### 🐣 Check out his old tweets: https://twitter.com/little_t_bot 🐣
+- Unfortunately with recent [Twitter Premium API Deprecation changes](https://twittercommunity.com/t/deprecating-the-premium-v1-1-api/191092) made in April of 2023 this project no longer has a sustainable way to be maintained as a hobbiest due to the 100$ fee to continue to utlize the Account Activity API which this project relied upon. 
 
 # How It Works ❔
 
