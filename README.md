@@ -1,11 +1,9 @@
 # Overview 📋
 Little_t is designed to copy a user's writing style by collecting a user's previous tweets and then responding to the requested user a sentence similar to that of the target. This process is explained below. 
+- Unfortunately with recent [Twitter Premium API Deprecation changes](https://twittercommunity.com/t/deprecating-the-premium-v1-1-api/191092) made in April of 2023 this project no longer has a sustainable way to be continued due to the 100$ fee to continue to utlize the Account Activity API which this project relied upon. Perhaps this change will be reverted in the future or another alternative solution can be found, but until then this is the last version of the project. 
 
-# Deprecated :(
 
 ### 🐣 Check out his old tweets: https://twitter.com/little_t_bot 🐣
-- Unfortunately with recent [Twitter Premium API Deprecation changes](https://twittercommunity.com/t/deprecating-the-premium-v1-1-api/191092) made in April of 2023 this project no longer has a sustainable way to be maintained as a hobbiest due to the 100$ fee to continue to utlize the Account Activity API which this project relied upon. 
-
 # How It Works ❔
 
 ### 1. Webook Subscription to [Twitter's Web API](https://developer.twitter.com/en/docs/twitter-api/enterprise/account-activity-api/quick-start/enterprise-account-activity-api) via AWS Lambda Deploy of a HTTP Flask API. 
@@ -20,7 +18,7 @@ Little_t is designed to copy a user's writing style by collecting a user's previ
 
 ### 2. Use a MongoDB Cluster to organize the the searched data into two collections:
   - One Collection called UserAccounts to store the user's Twitter ID, username, and a UTC timestamp of when that user was last requested. 
-  - The other Collection called TweetDumps to dump the Twitter ID of the poster, Tweet ID, and text content of the post. There is a single call to the timeline endpoint to check to see if any new tweets of the Twitter ID have been posted to avoid making upwards of 3200 redundant endpoint calls.  
+  - The other Collection called TweetDumps to dump the Twitter ID of the poster, Tweet ID, and text content of the post. There is a single call to the timeline endpoint to check to see if any new tweets of the Twitter ID have been posted to avoid making upwards of 3200 redundant endpoint calls.
   
 ### 3. Parse and clean tweets to make a sensible and usable Text Corpus 
 - lowercase all text
